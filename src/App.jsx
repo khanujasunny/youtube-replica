@@ -11,7 +11,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <Router>
+    <Router basename="/youtube">
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/video/:videoId" element={<VideoPlayer />} />
