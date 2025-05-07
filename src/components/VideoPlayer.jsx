@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchFromYouTube } from '../api';
+import SearchBar from './SearchBar';
 
 const VideoPlayer = () => {
   const { videoId } = useParams();
@@ -25,20 +26,23 @@ const VideoPlayer = () => {
   if (!videoDetails) return <div>Loading...</div>;
 
   return (
-    <div className="p-4">
-      <div className="aspect-w-16 aspect-h-9">
-        <iframe
-          src={`https://www.youtube.com/embed/${videoId}`}
-          title={videoDetails.snippet.title}
-          frameBorder="0"
-          allowFullScreen
-          className="w-full h-full"
-        ></iframe>
-      </div>
-      <h1 className="text-2xl font-bold mt-4">{videoDetails.snippet.title}</h1>
-      <p className="text-gray-600 mt-2">{videoDetails.snippet.description}</p>
-      <div className="mt-4">
-        <span className="font-semibold">Views:</span> {videoDetails.statistics.viewCount}
+    <div>
+      <SearchBar />
+      <div className="p-4">
+        <div className="aspect-w-16 aspect-h-9 w-full max-w-4xl mx-auto h-[500px]">
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}`}
+            title={videoDetails.snippet.title}
+            frameBorder="0"
+            allowFullScreen
+            className="w-full h-full"
+          ></iframe>
+        </div>
+        <h1 className="text-2xl font-bold mt-4">{videoDetails.snippet.title}</h1>
+        <p className="text-gray-600 mt-2">{videoDetails.snippet.description}</p>
+        <div className="mt-4">
+          <span className="font-semibold">Views:</span> {videoDetails.statistics.viewCount}
+        </div>
       </div>
     </div>
   );
