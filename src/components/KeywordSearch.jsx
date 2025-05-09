@@ -56,22 +56,31 @@ const KeywordSearch = () => {
                     ) : (
                         <div>
                             <h2>Results</h2>
-                            <div>
-                                <h3>Keywords Found:</h3>
-                                <ul>
+                            <table className="results-table">
+                                <thead>
+                                    <tr>
+                                        <th>Keyword</th>
+                                        <th>Status</th>
+                                        <th>File Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     {results.keywordsFound.map((keyword, index) => (
-                                        <li key={index}>{keyword}</li>
+                                        <tr key={index}>
+                                            <td>{keyword}</td>
+                                            <td>Found</td>
+                                            <td>{results.keywordsFileName[index]}</td>
+                                        </tr>
                                     ))}
-                                </ul>
-                            </div>
-                            <div>
-                                <h3>Keywords Not Found:</h3>
-                                <ul>
                                     {results.keywordsNotFound.map((keyword, index) => (
-                                        <li key={index}>{keyword}</li>
+                                        <tr key={index}>
+                                            <td>{keyword}</td>
+                                            <td>Not Found</td>
+                                            <td>-</td>
+                                        </tr>
                                     ))}
-                                </ul>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     )}
                 </div>

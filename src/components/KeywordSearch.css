@@ -1,13 +1,26 @@
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
 .keyword-search-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 20px;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .keyword-search-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 20px;
+    color: #ff9800;
 }
 
 .keyword-search-form {
@@ -16,7 +29,6 @@
     align-items: flex-start;
     gap: 15px;
     width: 100%;
-    max-width: 600px;
 }
 
 .form-group {
@@ -28,33 +40,73 @@
 .textarea-keywords {
     width: 100%;
     resize: vertical;
+    background-color: #2c2c2c;
+    color: #ffffff;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 .input-directory {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
+    background-color: #2c2c2c;
+    color: #ffffff;
+    border: 1px solid #444;
+    border-radius: 5px;
 }
 
 .btn-submit {
     align-self: flex-end;
     padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
+    background-color: #ff9800;
+    color: #121212;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
 }
 
 .btn-submit:hover {
-    background-color: #0056b3;
+    background-color: #e68900;
 }
 
 .results-container {
     margin-top: 20px;
     width: 100%;
-    max-width: 600px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.results-table th, .results-table td {
+    border: 1px solid #444;
+    padding: 10px;
+    text-align: left;
+}
+
+.results-table th {
+    background-color: #2c2c2c;
+    color: #ff9800;
+}
+
+.results-table tr:nth-child(even) {
+    background-color: #2c2c2c;
+}
+
+.results-table tr:nth-child(odd) {
+    background-color: #1e1e1e;
 }
 
 .error-message {
-    color: red;
+    color: #ff4d4d;
+    font-weight: bold;
 }

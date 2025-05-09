@@ -19,32 +19,41 @@ app.post('/search-keywords', (req, res) => {
     }
 
     const keywordsFound = [];
-    const keywordsNotFound = [];
+    const keywordsFileName = [];
+    const keywordsNotFound = new Set(keywords);
 
-    try {
-        const files = fs.readdirSync(directory);
+    function searchInDirectory(dir) {
+        console.info(`Searching in directory: ${dir}`);
+        const files = fs.readdirSync(dir);
 
-        keywords.forEach((keyword) => {
-            let found = false;
+        for (const file of files) {
+            const filePath = path.join(dir, file);
+            const stats = fs.statSync(filePath);
 
-            files.forEach((file) => {
-                const filePath = path.join(directory, file);
-                if (fs.statSync(filePath).isFile()) {
-                    const content = fs.readFileSync(filePath, 'utf-8');
-                    if (content.includes(keyword)) {
-                        found = true;
+            if (stats.isDirectory()) {
+                // Skip directories starting with a dot or node_modules
+                if (file.startsWith('.') || file === 'node_modules') {
+                    continue;
+                }
+                searchInDirectory(filePath);
+            } else if (stats.isFile()) {
+                const content = fs.readFileSync(filePath, 'utf-8');
+                
+                for (const keyword of keywords) {
+                    if (content.includes(keyword) || content.includes(keyword.toUpperCase()) || content.includes(keyword.toLowerCase())) {
+                        console.info(`Found: ${keyword} bytes`);
+                        keywordsFound.push(keyword);
+                        keywordsFileName.push(filePath);
+                        keywordsNotFound.delete(keyword);
                     }
                 }
-            });
-
-            if (found) {
-                keywordsFound.push(keyword);
-            } else {
-                keywordsNotFound.push(keyword);
             }
-        });
+        }
+    }
 
-        res.json({ keywordsFound, keywordsNotFound });
+    try {
+        searchInDirectory(directory);
+        res.json({ keywordsFound,keywordsFileName, keywordsNotFound: Array.from(keywordsNotFound) });
     } catch (error) {
         res.status(500).json({ error: 'Error reading directory or files.' });
     }
