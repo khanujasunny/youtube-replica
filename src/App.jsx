@@ -6,6 +6,7 @@ import './App.css'
 import Homepage from './components/Homepage';
 import VideoPlayer from './components/VideoPlayer';
 import SearchResults from './components/SearchResults';
+import KeywordSearch from './components/KeywordSearch';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/video/:videoId" element={<VideoPlayer />} />
         <Route path="/search/:query" element={<SearchResults />} />
+        <Route path="/keyword-search" element={<KeywordSearch />} />
       </Routes>
     </Router>
   )
