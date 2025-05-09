@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { saveAs } from 'file-saver';
 import './KeywordSearch.css'; // Importing a CSS file for styling
 
 const KeywordSearch = () => {
@@ -21,6 +22,23 @@ const KeywordSearch = () => {
             console.error('Error searching keywords:', error);
             setResults({ error: 'Failed to search keywords. Please try again.' });
         }
+    };
+
+    const handleExportCSV = () => {
+        if (!results) return;
+
+        const csvRows = [
+            ['Keyword', 'Status', 'File Name'],
+            ...results.keywordsFound.map((keyword, index) => [keyword, 'Found', results.keywordsFileName[index] || 'Unknown']),
+            ...results.keywordsNotFound.map((keyword) => [keyword, 'Not Found', '-']),
+        ];
+
+        const csvContent = csvRows
+            .map((row) => row.map((cell) => `"${cell}"`).join(','))
+            .join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        saveAs(blob, 'keyword_search_results.csv');
     };
 
     return (
@@ -55,6 +73,7 @@ const KeywordSearch = () => {
                         <p className="error-message">{results.error}</p>
                     ) : (
                         <div>
+                            <button onClick={handleExportCSV} className="btn-export">Export as CSV</button>
                             <h2>Results</h2>
                             <table className="results-table">
                                 <thead>
@@ -81,6 +100,7 @@ const KeywordSearch = () => {
                                     ))}
                                 </tbody>
                             </table>
+                            <button onClick={handleExportCSV} className="btn-export">Export as CSV</button>
                         </div>
                     )}
                 </div>
